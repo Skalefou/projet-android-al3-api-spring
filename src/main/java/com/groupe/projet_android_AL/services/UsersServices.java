@@ -1,5 +1,6 @@
 package com.groupe.projet_android_AL.services;
 
+import com.groupe.projet_android_AL.dtos.UsersLoginRequestDTO;
 import com.groupe.projet_android_AL.dtos.UsersRegisterRequestDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.UsersRepository;
@@ -27,5 +28,16 @@ public class UsersServices {
                 .password(usersDTO.password)
                 .build();
         return usersRepository.save(newUser);
+    }
+
+    public Users loginUser(UsersLoginRequestDTO usersDTO) {
+        final Users user = usersRepository.findByEmail(usersDTO.email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (!user.getPassword().equals(usersDTO.password)) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        return user;
     }
 }
