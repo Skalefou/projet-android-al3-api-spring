@@ -1,5 +1,6 @@
 package com.groupe.projet_android_AL.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Users {
     @Column(nullable = false, unique = true, length = 120)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false, length = 64)
     private String password;
 }
