@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18.0
+    image: postgres:17.5
     restart: no
     env_file:
       - .env
