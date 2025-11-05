@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.auth;
+package com.groupe.projet_android_AL.auth.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

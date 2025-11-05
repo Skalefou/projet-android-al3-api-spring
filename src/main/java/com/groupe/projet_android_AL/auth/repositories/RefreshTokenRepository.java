@@ -1,5 +1,6 @@
-package com.groupe.projet_android_AL.auth;
+package com.groupe.projet_android_AL.auth.repositories;
 
+import com.groupe.projet_android_AL.auth.models.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.auth;
+package com.groupe.projet_android_AL.auth.records;
 
 public record TokenPair(
         String access,
