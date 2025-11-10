@@ -1,6 +1,9 @@
 package com.groupe.projet_android_AL.services;
 
+import com.groupe.projet_android_AL.auth.records.TokenPair;
+import com.groupe.projet_android_AL.auth.services.AuthService;
 import com.groupe.projet_android_AL.dtos.UsersLoginRequestDTO;
+import com.groupe.projet_android_AL.dtos.UsersLoginResponseDTO;
 import com.groupe.projet_android_AL.dtos.UsersRegisterRequestDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.UsersRepository;
@@ -11,23 +14,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UsersServices {
     private final UsersRepository usersRepository;
+    private final AuthService authService;
 
-    public UsersServices(UsersRepository repo) {
+    public UsersServices(UsersRepository repo, AuthService authService) {
         this.usersRepository = repo;
+        this.authService = authService;
     }
 
-    public Users registerUser(UsersRegisterRequestDTO usersDTO) {
+    public UsersLoginResponseDTO registerUser(UsersRegisterRequestDTO usersDTO) {
         if (usersRepository.findByEmail(usersDTO.email).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        final Users newUser = Users.builder()
+        Users newUser = Users.builder()
                 .firstName(usersDTO.firstName)
                 .lastName(usersDTO.lastName)
                 .email(usersDTO.email)
                 .password(usersDTO.password)
                 .build();
-        return usersRepository.save(newUser);
+
+        newUser = usersRepository.save(newUser);
+        TokenPair tokens = authService.createToken(newUser);
+        return new UsersLoginResponseDTO(newUser, tokens);
     }
 
     public Users loginUser(UsersLoginRequestDTO usersDTO) {

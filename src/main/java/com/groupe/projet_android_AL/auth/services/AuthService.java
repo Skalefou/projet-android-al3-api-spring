@@ -39,14 +39,7 @@ public class AuthService {
         this.refreshTtl = rTtl;
     }
 
-    public TokenPair login(LoginRequest loginRequest) {
-        Users user = usersRepository.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials"));
-
-        if (!encoder.matches(loginRequest.password(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials");
-        }
-
+    public TokenPair createToken(Users user) {
         String access = jwtService.generateAccessToken(user.getId());
         String jti = UUID.randomUUID().toString();
         String refresh = jwtService.generateRefreshToken(user.getId(), jti);
@@ -58,6 +51,17 @@ public class AuthService {
         refreshTokenRepository.save(rt);
 
         return new TokenPair(access, refresh);
+    }
+
+    public TokenPair login(LoginRequest loginRequest) {
+        Users user = usersRepository.findByEmail(loginRequest.email())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials"));
+
+        if (!encoder.matches(loginRequest.password(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials");
+        }
+
+        return createToken(user);
     }
 
     public TokenPair refreshToken(RefreshRequest req) {
