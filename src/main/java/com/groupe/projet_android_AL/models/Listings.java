@@ -15,4 +15,15 @@ public class Listings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String title;
+
+    private String description;
+
+    private int priceByNight;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private Users owner;
 }
