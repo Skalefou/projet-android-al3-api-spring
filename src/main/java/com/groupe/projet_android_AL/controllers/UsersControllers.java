@@ -1,9 +1,9 @@
 package com.groupe.projet_android_AL.controllers;
 
 import com.groupe.projet_android_AL.auth.annotations.CurrentUser;
-import com.groupe.projet_android_AL.dtos.UsersLoginRequestDTO;
-import com.groupe.projet_android_AL.dtos.UsersLoginResponseDTO;
-import com.groupe.projet_android_AL.dtos.UsersRegisterRequestDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersLoginRequestDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersLoginResponseDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersRegisterRequestDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.services.UsersServices;
 import jakarta.validation.Valid;

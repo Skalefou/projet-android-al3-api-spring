@@ -2,9 +2,9 @@ package com.groupe.projet_android_AL.services;
 
 import com.groupe.projet_android_AL.auth.records.TokenPair;
 import com.groupe.projet_android_AL.auth.services.AuthService;
-import com.groupe.projet_android_AL.dtos.UsersLoginRequestDTO;
-import com.groupe.projet_android_AL.dtos.UsersLoginResponseDTO;
-import com.groupe.projet_android_AL.dtos.UsersRegisterRequestDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersLoginRequestDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersLoginResponseDTO;
+import com.groupe.projet_android_AL.dtos.users.UsersRegisterRequestDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.UsersRepository;
 import org.springframework.stereotype.Service;

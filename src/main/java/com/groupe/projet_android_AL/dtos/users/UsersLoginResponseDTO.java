@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.dtos;
+package com.groupe.projet_android_AL.dtos.users;
 
 
 import com.groupe.projet_android_AL.auth.records.TokenPair;
