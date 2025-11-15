@@ -1,7 +1,7 @@
 package com.groupe.projet_android_AL.services;
 
-import com.groupe.projet_android_AL.dtos.ListingRequestDTO;
-import com.groupe.projet_android_AL.dtos.ListingResponseDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingRequestDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingResponseDTO;
 import com.groupe.projet_android_AL.models.Listings;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.ListingsRepository;

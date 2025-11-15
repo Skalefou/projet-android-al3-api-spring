@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.dtos;
+package com.groupe.projet_android_AL.dtos.reservations;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;

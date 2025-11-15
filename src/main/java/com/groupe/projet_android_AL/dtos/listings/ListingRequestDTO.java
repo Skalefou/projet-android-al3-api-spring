@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.dtos;
+package com.groupe.projet_android_AL.dtos.listings;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
 package com.groupe.projet_android_AL.services;
 
-import com.groupe.projet_android_AL.dtos.ReservationRequestDTO;
-import com.groupe.projet_android_AL.dtos.ReservationResponseDTO;
+import com.groupe.projet_android_AL.dtos.reservations.ReservationRequestDTO;
+import com.groupe.projet_android_AL.dtos.reservations.ReservationResponseDTO;
 import com.groupe.projet_android_AL.models.Listings;
 import com.groupe.projet_android_AL.models.Reservations;
 import com.groupe.projet_android_AL.models.Users;

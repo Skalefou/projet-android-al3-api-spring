@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.dtos;
+package com.groupe.projet_android_AL.dtos.listings;
 
 import com.groupe.projet_android_AL.models.Listings;
 
@@ -15,7 +15,7 @@ public class ListingResponseDTO {
         this.title = listing.getTitle();
         this.description = listing.getDescription();
         this.priceByNight = listing.getPriceByNight();
-        
+
         if (listing.getOwner() != null) {
             this.ownerId = listing.getOwner().getId();
             this.ownerName = listing.getOwner().getFirstName() + " " + listing.getOwner().getLastName();

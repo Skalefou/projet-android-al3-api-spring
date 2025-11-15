@@ -1,8 +1,8 @@
 package com.groupe.projet_android_AL.controllers;
 
 import com.groupe.projet_android_AL.auth.annotations.CurrentUser;
-import com.groupe.projet_android_AL.dtos.ReservationRequestDTO;
-import com.groupe.projet_android_AL.dtos.ReservationResponseDTO;
+import com.groupe.projet_android_AL.dtos.reservations.ReservationRequestDTO;
+import com.groupe.projet_android_AL.dtos.reservations.ReservationResponseDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.services.ReservationsService;
 import jakarta.validation.Valid;

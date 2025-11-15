@@ -1,4 +1,4 @@
-package com.groupe.projet_android_AL.dtos;
+package com.groupe.projet_android_AL.dtos.reservations;
 
 import com.groupe.projet_android_AL.models.Reservations;
 
@@ -21,12 +21,12 @@ public class ReservationResponseDTO {
         this.checkOutDate = reservation.getCheckOutDate();
         this.totalPrice = reservation.getTotalPrice();
         this.status = reservation.getStatus().name();
-        
+
         if (reservation.getListing() != null) {
             this.listingId = reservation.getListing().getId();
             this.listingTitle = reservation.getListing().getTitle();
         }
-        
+
         if (reservation.getGuest() != null) {
             this.guestId = reservation.getGuest().getId();
             this.guestName = reservation.getGuest().getFirstName() + " " + reservation.getGuest().getLastName();

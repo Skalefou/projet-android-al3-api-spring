@@ -1,8 +1,8 @@
 package com.groupe.projet_android_AL.controllers;
 
 import com.groupe.projet_android_AL.auth.annotations.CurrentUser;
-import com.groupe.projet_android_AL.dtos.ListingRequestDTO;
-import com.groupe.projet_android_AL.dtos.ListingResponseDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingRequestDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingResponseDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.services.ListingsService;
 import jakarta.validation.Valid;
