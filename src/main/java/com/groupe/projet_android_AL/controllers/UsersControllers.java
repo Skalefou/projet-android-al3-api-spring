@@ -28,7 +28,7 @@ public class UsersControllers {
     }
 
     @PostMapping("/login")
-    public Users loginUser(@RequestBody UsersLoginRequestDTO body) {
+    public UsersLoginResponseDTO loginUser(@RequestBody UsersLoginRequestDTO body) {
         return usersServices.loginUser(body);
     }
 
