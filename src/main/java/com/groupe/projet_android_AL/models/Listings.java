@@ -16,8 +16,10 @@ public class Listings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "title", length = 50, nullable = false)
     private String title;
 
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     private int priceByNight;
