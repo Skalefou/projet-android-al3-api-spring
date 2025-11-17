@@ -32,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        final String token = authHeader.substring(7); // remove "Bearer "
+        final String token = authHeader.substring(7);
         Integer userId = jwtService.getUserId(token);
 
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -40,8 +40,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 User principal = (User) User.builder()
                         .username(String.valueOf(userId))
-                        .password("") // pas utilisé ici
-                        .authorities("USER") // tu pourras mettre les rôles plus tard via DB
+                        .password("")
+                        .authorities("USER")
                         .build();
 
                 UsernamePasswordAuthenticationToken authToken =

@@ -38,7 +38,7 @@ public class UsersServices {
         return new UsersLoginResponseDTO(newUser, tokens);
     }
 
-    public Users loginUser(UsersLoginRequestDTO usersDTO) {
+    public UsersLoginResponseDTO loginUser(UsersLoginRequestDTO usersDTO) {
         final Users user = usersRepository.findByEmail(usersDTO.email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
@@ -46,6 +46,7 @@ public class UsersServices {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        return user;
+        TokenPair tokens = authService.createToken(user);
+        return new UsersLoginResponseDTO(user, tokens);
     }
 }
