@@ -28,6 +28,7 @@ public class PropertyListingsController {
     public ResponseEntity<ListingResponseDTO> createListing(
             @Valid @RequestBody ListingRequestDTO requestDTO,
             @CurrentUser Users user) {
+        System.out.println(user.getEmail());
         ListingResponseDTO listing = listingsService.createListing(requestDTO, user);
         return ResponseEntity.status(HttpStatus.CREATED).body(listing);
     }
