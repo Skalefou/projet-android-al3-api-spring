@@ -7,6 +7,8 @@ import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.ListingsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +17,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class ListingsService {
     private final ListingsRepository listingsRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public ListingsService(ListingsRepository listingsRepository) {
         this.listingsRepository = listingsRepository;
@@ -25,6 +30,22 @@ public class ListingsService {
                 .title(requestDTO.title)
                 .description(requestDTO.description)
                 .priceByNight(requestDTO.priceByNight)
+                .numberOfRooms(requestDTO.numberOfRooms)
+                .numberOfBathrooms(requestDTO.numberOfBathrooms)
+                .numberOfBed(requestDTO.numberOfBed)
+                .hasWifi(requestDTO.hasWifi)
+                .hasWashingMachine(requestDTO.hasWashingMachine)
+                .hasAirConditioning(requestDTO.hasAirConditioning)
+                .hasTv(requestDTO.hasTv)
+                .hasParking(requestDTO.hasParking)
+                .maxGuests(requestDTO.maxGuests)
+                .address(requestDTO.address)
+                .zipCode(requestDTO.zipCode)
+                .city(requestDTO.city)
+                .country(requestDTO.country)
+                .firstImage(requestDTO.firstImage)
+                .secondImage(requestDTO.secondImage)
+                .thirdImage(requestDTO.thirdImage)
                 .owner(owner)
                 .build();
 
@@ -59,6 +80,9 @@ public class ListingsService {
         listing.setTitle(requestDTO.title);
         listing.setDescription(requestDTO.description);
         listing.setPriceByNight(requestDTO.priceByNight);
+
+        // Force flush to ensure all changes are persisted immediately
+        entityManager.flush();
 
         listing = listingsRepository.save(listing);
         return new ListingResponseDTO(listing);

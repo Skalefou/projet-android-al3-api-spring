@@ -61,13 +61,13 @@ public class Listings {
     @Column(name = "country", length = 50, nullable = false)
     private String country;
 
-    @Column(name = "first_image", length = 10000, nullable = false)
+    @Column(name = "first_image", length = 100000, nullable = false)
     private String firstImage;
 
-    @Column(name = "second_image", length = 10000)
+    @Column(name = "second_image", length = 100000)
     private String secondImage;
 
-    @Column(name = "third_image", length = 10000)
+    @Column(name = "third_image", length = 100000)
     private String thirdImage;
 
     @Column(name = "price_by_night", nullable = false)
