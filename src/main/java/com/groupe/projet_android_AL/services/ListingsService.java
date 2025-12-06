@@ -29,6 +29,7 @@ public class ListingsService {
         Listings listing = Listings.builder()
                 .title(requestDTO.title)
                 .description(requestDTO.description)
+                .type(requestDTO.type)
                 .priceByNight(requestDTO.priceByNight)
                 .numberOfRooms(requestDTO.numberOfRooms)
                 .numberOfBathrooms(requestDTO.numberOfBathrooms)

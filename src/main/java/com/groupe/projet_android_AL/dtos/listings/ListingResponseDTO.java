@@ -6,6 +6,7 @@ public class ListingResponseDTO {
     public Integer id;
     public String title;
     public String description;
+    public String type;
     public int numberOfRooms;
     public int numberOfBathrooms;
     public int numberOfBed;
@@ -30,6 +31,7 @@ public class ListingResponseDTO {
         this.id = listing.getId();
         this.title = listing.getTitle();
         this.description = listing.getDescription();
+        this.type = listing.getType();
         this.numberOfRooms = listing.getNumberOfRooms();
         this.numberOfBathrooms = listing.getNumberOfBathrooms();
         this.numberOfBed = listing.getNumberOfBed();

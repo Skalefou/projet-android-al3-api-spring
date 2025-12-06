@@ -11,6 +11,10 @@ public class ListingRequestDTO {
     @Size(min = 10, max = 2000, message = "Description must be between 10 and 2000 characters")
     public String description;
 
+    @NotBlank(message = "Type is mandatory")
+    @Size(min = 1, max = 50, message = "Title must be between 1 and 200 characters")
+    public String type;
+
     @Positive(message = "Number of rooms must be positive")
     public Integer numberOfRooms;
 

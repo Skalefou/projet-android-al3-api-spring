@@ -22,6 +22,9 @@ public class Listings {
     @Column(name = "description", columnDefinition = "TEXT", length = 2000)
     private String description;
 
+    @Column(name = "type", columnDefinition = "TEXT", length = 50)
+    private String type;
+
     @Column(name = "number_of_rooms", nullable = false)
     private int numberOfRooms;
 
