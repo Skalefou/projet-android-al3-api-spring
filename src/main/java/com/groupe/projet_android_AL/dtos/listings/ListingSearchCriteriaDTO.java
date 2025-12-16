@@ -19,7 +19,11 @@ public class ListingSearchCriteriaDTO {
     public Integer minBathrooms;
     public Integer minBeds;
 
-    public Integer getTotalGuests() {
+    public boolean hasGuestFilter() {
+        return adults != null || children != null || babies != null;
+    }
+
+    public int getTotalGuests() {
         int a = adults == null ? 1 : adults;
         int c = children == null ? 0 : children;
         int b = babies == null ? 0 : babies;

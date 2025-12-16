@@ -106,7 +106,84 @@ public class PropertyListingsController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ListingResponseDTO>> getFilteredListings(@ModelAttribute ListingSearchCriteriaDTO criteria) {
+    public ResponseEntity<List<ListingResponseDTO>> getFilteredListings(
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String propertyType,
+
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+
+            @RequestParam(required = false) Integer minRooms,
+            @RequestParam(required = false) Integer minBathrooms,
+            @RequestParam(required = false) Integer minBeds,
+
+            @RequestParam(required = false) Integer adults,
+            @RequestParam(required = false) Integer children,
+            @RequestParam(required = false) Integer babies,
+            @RequestParam(required = false) Integer pets,
+
+            @RequestParam(required = false) Long checkIn,
+            @RequestParam(required = false) Long checkOut
+    ) {
+
+        ListingSearchCriteriaDTO criteria = mapToCriteria(
+                city,
+                propertyType,
+                minPrice,
+                maxPrice,
+                minRooms,
+                minBathrooms,
+                minBeds,
+                adults,
+                children,
+                babies,
+                pets,
+                checkIn,
+                checkOut
+        );
+
         return ResponseEntity.ok(listingsService.getFilteredListings(criteria));
     }
+
+    private ListingSearchCriteriaDTO mapToCriteria(
+            String city,
+            String propertyType,
+            Integer minPrice,
+            Integer maxPrice,
+            Integer minRooms,
+            Integer minBathrooms,
+            Integer minBeds,
+            Integer adults,
+            Integer children,
+            Integer babies,
+            Integer pets,
+            Long checkIn,
+            Long checkOut
+    ) {
+        ListingSearchCriteriaDTO dto = new ListingSearchCriteriaDTO();
+
+        dto.city = city;
+        dto.propertyType = propertyType;
+
+        dto.minPrice = minPrice;
+        dto.maxPrice = maxPrice;
+
+        dto.minRooms = minRooms;
+        dto.minBathrooms = minBathrooms;
+        dto.minBeds = minBeds;
+
+        dto.adults = adults;
+        dto.children = children;
+        dto.babies = babies;
+        dto.pets = pets;
+
+        dto.checkIn = checkIn;
+        dto.checkOut = checkOut;
+
+        return dto;
+    }
+
+
 }
+
+

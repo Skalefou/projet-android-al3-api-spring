@@ -7,6 +7,7 @@ import com.groupe.projet_android_AL.auth.records.TokenPair;
 import com.groupe.projet_android_AL.auth.repositories.RefreshTokenRepository;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.UsersRepository;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -70,34 +71,45 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Token");
         }
 
-        if (!"refresh".equals(jwtService.getType(token))) {
+        try {
+            if (!"refresh".equals(jwtService.getType(token))) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Token");
+            }
+
+            Integer userId = jwtService.getUserId(token);
+            String jti = jwtService.getJti(token);
+
+            RefreshToken current = refreshTokenRepository.findByJtiAndRevokedFalse(jti)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Token"));
+
+            if (!current.getUserId().equals(userId)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Token");
+            }
+
+            if (current.getExpiresAt().isBefore(Instant.now())) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh Expired");
+            }
+
+            // revoke old refresh
+            current.setRevoked(true);
+            refreshTokenRepository.save(current);
+
+            // create new token pair
+            String newAccess = jwtService.generateAccessToken(userId);
+            String newJti = UUID.randomUUID().toString();
+            String newRefresh = jwtService.generateRefreshToken(userId, newJti);
+
+            RefreshToken next = new RefreshToken();
+            next.setJti(newJti);
+            next.setExpiresAt(Instant.now().plus(refreshTtl));
+            next.setUserId(userId);
+            refreshTokenRepository.save(next);
+
+            return new TokenPair(newAccess, newRefresh);
+
+        } catch (JwtException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Token");
         }
-
-        Integer userId = jwtService.getUserId(token);
-        String jti = jwtService.getJti(token);
-
-        RefreshToken current = refreshTokenRepository.findByJtiAndRevokedFalse(jti)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Token"));
-
-        if(current.getExpiresAt().isBefore(Instant.now())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh Expired");
-        }
-
-        current.setRevoked(true);
-        refreshTokenRepository.save(current);
-
-        String newAccess = jwtService.generateAccessToken(userId);
-        String newJti = UUID.randomUUID().toString();
-        String newRefresh = jwtService.generateRefreshToken(userId, newJti);
-
-        RefreshToken next = new RefreshToken();
-        next.setJti(newJti);
-        next.setExpiresAt(Instant.now().plus(refreshTtl));
-        next.setUserId(userId);
-        refreshTokenRepository.save(next);
-
-        return new TokenPair(newAccess, newRefresh);
     }
 
     public void logoutByRefresh(String refreshToken) {

@@ -1,6 +1,8 @@
 package com.groupe.projet_android_AL.controllers;
 
 import com.groupe.projet_android_AL.auth.annotations.CurrentUser;
+import com.groupe.projet_android_AL.auth.records.RefreshRequest;
+import com.groupe.projet_android_AL.auth.records.TokenPair;
 import com.groupe.projet_android_AL.dtos.users.UsersLoginRequestDTO;
 import com.groupe.projet_android_AL.dtos.users.UsersLoginResponseDTO;
 import com.groupe.projet_android_AL.dtos.users.UsersRegisterRequestDTO;
@@ -35,5 +37,10 @@ public class UsersControllers {
     @GetMapping("/test")
     public ResponseEntity<String> testEndpoint(@CurrentUser Users user) {
         return ResponseEntity.ok("Test endpoint is working! current user email: " + user.getEmail());
+    }
+
+    @PostMapping("/refresh")
+    public TokenPair refresh(@Valid @RequestBody RefreshRequest body) {
+        return usersServices.refreshToken(body);
     }
 }
