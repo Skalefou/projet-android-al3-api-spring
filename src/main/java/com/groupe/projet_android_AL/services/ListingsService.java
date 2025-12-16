@@ -2,9 +2,12 @@ package com.groupe.projet_android_AL.services;
 
 import com.groupe.projet_android_AL.dtos.listings.ListingRequestDTO;
 import com.groupe.projet_android_AL.dtos.listings.ListingResponseDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingSearchCriteriaDTO;
 import com.groupe.projet_android_AL.models.Listings;
 import com.groupe.projet_android_AL.models.Users;
+import com.groupe.projet_android_AL.repositories.ListingSpecifications;
 import com.groupe.projet_android_AL.repositories.ListingsRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
@@ -82,7 +85,6 @@ public class ListingsService {
         listing.setDescription(requestDTO.description);
         listing.setPriceByNight(requestDTO.priceByNight);
 
-        // Force flush to ensure all changes are persisted immediately
         entityManager.flush();
 
         listing = listingsRepository.save(listing);
@@ -94,6 +96,26 @@ public class ListingsService {
                 .orElseThrow(() -> new IllegalArgumentException("Listing not found or you are not the owner"));
 
         listingsRepository.delete(listing);
+    }
+
+    public List<ListingResponseDTO> getFilteredListings(ListingSearchCriteriaDTO c) {
+        Integer minPrice = c.minPrice == null ? 1 : c.minPrice;
+        Integer maxPrice = c.maxPrice == null ? 15000 : c.maxPrice;
+
+        Specification<Listings> spec = Specification
+                .where(ListingSpecifications.cityEquals(c.city))
+                .and(ListingSpecifications.typeEquals(c.propertyType))
+                .and(ListingSpecifications.priceBetween(minPrice, maxPrice))
+                .and(ListingSpecifications.roomsAtLeast(c.minRooms))
+                .and(ListingSpecifications.bathroomsAtLeast(c.minBathrooms))
+                .and(ListingSpecifications.bedsAtLeast(c.minBeds))
+                .and(ListingSpecifications.guestsAtLeast(c.getTotalGuests()));
+
+
+        return listingsRepository.findAll(spec)
+                .stream()
+                .map(ListingResponseDTO::new)
+                .collect(Collectors.toList());
     }
 }
 

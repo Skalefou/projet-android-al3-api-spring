@@ -3,6 +3,7 @@ package com.groupe.projet_android_AL.controllers;
 import com.groupe.projet_android_AL.auth.annotations.CurrentUser;
 import com.groupe.projet_android_AL.dtos.listings.ListingRequestDTO;
 import com.groupe.projet_android_AL.dtos.listings.ListingResponseDTO;
+import com.groupe.projet_android_AL.dtos.listings.ListingSearchCriteriaDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.services.FavoriteService;
 import com.groupe.projet_android_AL.services.ListingsService;
@@ -100,5 +101,10 @@ public class PropertyListingsController {
             @CurrentUser Users user) {
         boolean isFavorite = favoriteService.isFavorite(id, user);
         return ResponseEntity.ok(Map.of("isFavorite", isFavorite));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ListingResponseDTO>> getFilteredListings(@ModelAttribute ListingSearchCriteriaDTO criteria) {
+        return ResponseEntity.ok(listingsService.getFilteredListings(criteria));
     }
 }
