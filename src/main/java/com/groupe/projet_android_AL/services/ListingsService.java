@@ -102,14 +102,18 @@ public class ListingsService {
         Integer minPrice = c.minPrice == null ? 1 : c.minPrice;
         Integer maxPrice = c.maxPrice == null ? 15000 : c.maxPrice;
 
-        Specification<Listings> spec = Specification
-                .where(ListingSpecifications.cityEquals(c.city))
-                .and(ListingSpecifications.typeEquals(c.propertyType))
-                .and(ListingSpecifications.priceBetween(minPrice, maxPrice))
-                .and(ListingSpecifications.roomsAtLeast(c.minRooms))
-                .and(ListingSpecifications.bathroomsAtLeast(c.minBathrooms))
-                .and(ListingSpecifications.bedsAtLeast(c.minBeds))
-                .and(ListingSpecifications.guestsAtLeast(c.getTotalGuests()));
+        Specification<Listings> spec = Specification.allOf(
+                ListingSpecifications.cityEquals(c.city),
+                ListingSpecifications.typeEquals(c.propertyType),
+                ListingSpecifications.priceBetween(minPrice, maxPrice),
+                ListingSpecifications.roomsAtLeast(c.minRooms),
+                ListingSpecifications.bathroomsAtLeast(c.minBathrooms),
+                ListingSpecifications.bedsAtLeast(c.minBeds),
+                c.hasGuestFilter()
+                        ? ListingSpecifications.guestsAtLeast(c.getTotalGuests())
+                        : null
+        );
+
 
 
         return listingsRepository.findAll(spec)
