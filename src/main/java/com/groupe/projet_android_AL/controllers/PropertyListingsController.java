@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Controller
@@ -34,7 +35,8 @@ public class PropertyListingsController {
             @Valid @RequestBody ListingRequestDTO requestDTO,
             @CurrentUser Users user) {
         System.out.println(user.getEmail());
-        ListingResponseDTO listing = listingsService.createListing(requestDTO, user);
+        Optional<Users> userOptional = Optional.ofNullable(user);
+        ListingResponseDTO listing = listingsService.createListing(requestDTO, userOptional.orElse(new Users()));
         return ResponseEntity.status(HttpStatus.CREATED).body(listing);
     }
 
