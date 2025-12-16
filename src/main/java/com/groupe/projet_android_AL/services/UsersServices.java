@@ -1,5 +1,6 @@
 package com.groupe.projet_android_AL.services;
 
+import com.groupe.projet_android_AL.auth.records.RefreshRequest;
 import com.groupe.projet_android_AL.auth.records.TokenPair;
 import com.groupe.projet_android_AL.auth.services.AuthService;
 import com.groupe.projet_android_AL.dtos.users.UsersLoginRequestDTO;
@@ -7,8 +8,10 @@ import com.groupe.projet_android_AL.dtos.users.UsersLoginResponseDTO;
 import com.groupe.projet_android_AL.dtos.users.UsersRegisterRequestDTO;
 import com.groupe.projet_android_AL.models.Users;
 import com.groupe.projet_android_AL.repositories.UsersRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @Transactional
@@ -48,5 +51,9 @@ public class UsersServices {
 
         TokenPair tokens = authService.createToken(user);
         return new UsersLoginResponseDTO(user, tokens);
+    }
+
+    public TokenPair refreshToken(RefreshRequest body) {
+        return authService.refreshToken(body);
     }
 }
